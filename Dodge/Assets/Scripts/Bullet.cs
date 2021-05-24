@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float speed = 8f;
     private Rigidbody bulletRigidbody;
+    public int damage = 30;
     void Start()
     {
         bulletRigidbody = GetComponent<Rigidbody>();
@@ -13,16 +12,17 @@ public class Bullet : MonoBehaviour
 
         Destroy(gameObject, 3f);
     }
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
             if(playerController != null)
             {
-                playerController.Die();
+                playerController.GetDamage(damage);
+                Destroy(gameObject);
             }
-        }
+        }   
     }
 }
 
